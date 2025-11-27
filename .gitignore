@@ -1,0 +1,19 @@
+# ===== Visual Studio =====
+.vs/
+AdminMVC/.vs/
+UserMVC/.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# ===== Build Output =====
+bin/
+obj/
+**/bin/
+**/obj/
+
+# ===== OS =====
+.DS_Store
+Thumbs.db
+

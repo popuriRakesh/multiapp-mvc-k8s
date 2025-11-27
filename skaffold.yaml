@@ -1,0 +1,42 @@
+apiVersion: skaffold/v4beta6
+kind: Config
+
+build:
+  local:
+    push: false
+
+  artifacts:
+    - image: adminmvc
+      context: AdminMVC
+      docker:
+        dockerfile: Dockerfile.dev
+      sync:
+        manual:
+          - src: "Views/**/*.cshtml"
+            dest: "/app"
+          - src: "wwwroot/css/**/*.css"
+            dest: "/app/wwwroot/css"
+          - src: "wwwroot/js/**/*.js"
+            dest: "/app/wwwroot/js"
+
+    - image: usermvc
+      context: UserMVC
+      docker:
+        dockerfile: Dockerfile.dev
+      sync:
+        manual:
+          - src: "Views/**/*.cshtml"
+            dest: "/app"
+          - src: "wwwroot/css/**/*.css"
+            dest: "/app/wwwroot/css"
+          - src: "wwwroot/js/**/*.js"
+            dest: "/app/wwwroot/js"
+
+manifests:
+  rawYaml:
+    - AdminMVC/admin.yaml
+    - UserMVC/user.yaml
+    - ingress.yaml
+
+deploy:
+  kubectl: {}

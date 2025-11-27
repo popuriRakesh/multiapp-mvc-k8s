@@ -1,0 +1,32 @@
+﻿apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: adminmvc
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: adminmvc
+  template:
+    metadata:
+      labels:
+        app: adminmvc
+    spec:
+      imagePullSecrets:
+        - name: dockerhub-secret
+      containers:
+        - name: adminmvc
+          image: rakeshdev12/adminmvc:latest
+          ports:
+            - containerPort: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: adminmvc-service
+spec:
+  selector:
+    app: adminmvc
+  ports:
+    - port: 80
+      targetPort: 8080

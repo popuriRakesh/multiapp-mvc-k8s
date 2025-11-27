@@ -1,0 +1,25 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: mvc-ingress
+spec:
+  ingressClassName: traefik
+  rules:
+    - host: localhost
+      http:
+        paths:
+        - path: /admin
+          pathType: Prefix
+          backend:
+            service:
+              name: adminmvc-service
+              port:
+                number: 80
+
+        - path: /user
+          pathType: Prefix
+          backend:
+            service:
+              name: usermvc-service
+              port:
+                number: 80
