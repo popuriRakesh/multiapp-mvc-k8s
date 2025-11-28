@@ -13,13 +13,12 @@ spec:
       labels:
         app: usermvc
     spec:
-      imagePullSecrets:
-        - name: dockerhub-secret
       containers:
         - name: usermvc
-          image: rakeshdev12/usermvc:latest
+          image: rakeshdev12/usermvc:latest    # ✅ FIX
+          imagePullPolicy: Always               # ✅ FIX
           ports:
-            - containerPort: 8080   # ✅ FIXED
+            - containerPort: 8080
 ---
 apiVersion: v1
 kind: Service
@@ -31,4 +30,4 @@ spec:
     app: usermvc
   ports:
     - port: 80
-      targetPort: 8080   # ✅ FIXED
+      targetPort: 8080
