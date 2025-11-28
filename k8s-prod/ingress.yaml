@@ -17,6 +17,11 @@ spec:
                 name: adminmvc-service
                 port:
                   number: 80
+            # ✅ ADMIN middleware
+            middlewares:
+              - name: strip-admin
+                namespace: multiapp-prod
+
           - path: /user
             pathType: Prefix
             backend:
@@ -24,3 +29,7 @@ spec:
                 name: usermvc-service
                 port:
                   number: 80
+            # ✅ USER middleware
+            middlewares:
+              - name: strip-user
+                namespace: multiapp-prod
