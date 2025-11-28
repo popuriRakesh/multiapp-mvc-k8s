@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: adminmvc
-          image: adminmvc        # ✅ LOCAL IMAGE
+          imagePullPolicy: Always   # ✅ ADD THIS
           ports:
             - containerPort: 8080
 

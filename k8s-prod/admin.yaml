@@ -13,12 +13,13 @@ spec:
       labels:
         app: adminmvc
     spec:
+      imagePullSecrets:
+        - name: dockerhub-secret
       containers:
         - name: adminmvc
-          image: rakeshdev12/adminmvc:latest   # ✅ FIX
-          imagePullPolicy: Always               # ✅ FIX
+          image: rakeshdev12/adminmvc:latest
           ports:
-            - containerPort: 8080
+            - containerPort: 8080   # ✅ FIXED
 ---
 apiVersion: v1
 kind: Service
@@ -30,4 +31,4 @@ spec:
     app: adminmvc
   ports:
     - port: 80
-      targetPort: 8080
+      targetPort: 8080   # ✅ FIXED

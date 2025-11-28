@@ -12,12 +12,13 @@ spec:
       labels:
         app: usermvc
     spec:
+      imagePullSecrets:
+        - name: dockerhub-secret
       containers:
         - name: usermvc
-          image: usermvc         # ✅ LOCAL IMAGE
+          imagePullPolicy: Always   # ✅ ADD THIS
           ports:
             - containerPort: 8080
-
 ---
 apiVersion: v1
 kind: Service
