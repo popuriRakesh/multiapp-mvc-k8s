@@ -14,7 +14,8 @@ spec:
     spec:
       containers:
         - name: adminmvc
-          imagePullPolicy: Always   # ✅ ADD THIS
+          image: rakeshdev12/usermvc:latest    # ✅ REQUIRED
+          imagePullPolicy: Always              # ✅ REQUIRED
           ports:
             - containerPort: 8080
 
