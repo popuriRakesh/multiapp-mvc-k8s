@@ -18,6 +18,7 @@ spec:
       containers:
         - name: usermvc
           image: rakeshdev12/usermvc:latest
+          imagePullPolicy: Always
           ports:
             - containerPort: 8080   # ✅ FIXED
 ---
