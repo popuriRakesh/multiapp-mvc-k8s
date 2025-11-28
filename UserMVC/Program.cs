@@ -1,25 +1,19 @@
 ﻿using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 
+builder.WebHost.UseUrls("http://0.0.0.0:8080");
+
 var app = builder.Build();
 
-// ✅ user PathBase
-app.UsePathBase("/user");
+// ❌ REMOVE UsePathBase
+// ❌ REMOVE strip middleware
 
 app.UseStaticFiles();
 app.UseRouting();
-
-app.Use(async (context, next) =>
-{
-    if (context.Request.Path.StartsWithSegments("/user", out var remaining))
-    {
-        context.Request.Path = remaining;
-    }
-    await next();
-});
 
 app.MapControllerRoute(
     name: "default",

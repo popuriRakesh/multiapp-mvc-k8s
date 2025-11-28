@@ -1,0 +1,47 @@
+name: CI/CD Deploy to Kubernetes
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Login to Docker Hub
+      uses: docker/login-action@v3
+      with:
+        username: ${{ secrets.DOCKERHUB_USERNAME }}
+        password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+    - name: Build & Push AdminMVC
+      run: |
+        docker build -t rakeshdev12/adminmvc:latest ./AdminMVC
+        docker push rakeshdev12/adminmvc:latest
+
+    - name: Build & Push UserMVC
+      run: |
+        docker build -t rakeshdev12/usermvc:latest ./UserMVC
+        docker push rakeshdev12/usermvc:latest
+
+    - name: Setup kubeconfig
+      run: |
+        mkdir -p $HOME/.kube
+        echo "${{ secrets.KUBE_CONFIG }}" | base64 -d > $HOME/.kube/config
+
+    - name: Deploy to Kubernetes
+      run: |
+        kubectl apply -f k8s-prod/namespace.yaml
+        kubectl apply -f k8s-prod/admin.yaml
+        kubectl apply -f k8s-prod/user.yaml
+        kubectl apply -f k8s-prod/ingress.yaml
+
+    - name: Restart deployments
+      run: |
+        kubectl rollout restart deployment adminmvc -n multiapp-prod
+        kubectl rollout restart deployment usermvc -n multiapp-prod

@@ -1,22 +1,21 @@
 ﻿using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 
 var builder = WebApplication.CreateBuilder(args);
+
 builder.Services.AddControllersWithViews();
+
+// ✅ LISTEN ON 8080 (matches service targetPort)
+builder.WebHost.UseUrls("http://0.0.0.0:8080");
 
 var app = builder.Build();
 
-app.UsePathBase("/admin");
+// ❌ REMOVE UsePathBase
+// ❌ REMOVE path-rewrite middleware
+
 app.UseStaticFiles();
 app.UseRouting();
-
-app.Use(async (context, next) =>
-{
-    if (context.Request.Path.StartsWithSegments("/admin", out var remaining))
-        context.Request.Path = remaining;
-
-    await next();
-});
 
 app.MapControllerRoute(
     name: "default",
