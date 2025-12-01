@@ -1,0 +1,30 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: adminmvc-service
+  namespace: {{ .Values.namespace }}
+  labels:
+    app: adminmvc
+    {{- include "multiapp.labels" . | nindent 4 }}
+spec:
+  selector:
+    app: adminmvc
+  ports:
+    - port: 80
+      targetPort: 8080
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: usermvc-service
+  namespace: {{ .Values.namespace }}
+  labels:
+    app: usermvc
+    {{- include "multiapp.labels" . | nindent 4 }}
+spec:
+  selector:
+    app: usermvc
+  ports:
+    - port: 80
+      targetPort: 8080

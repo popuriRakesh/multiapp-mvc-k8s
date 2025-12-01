@@ -1,0 +1,6 @@
+apiVersion: v2
+name: multiapp
+description: Multi-app ASP.NET MVC deployment (Admin + User)
+type: application
+version: 0.1.0
+appVersion: "1.0.0"

@@ -1,0 +1,15 @@
+# multiapp/values.yaml
+image:
+  admin:
+    repository: rakeshdev12/adminmvc
+    tag: latest
+  user:
+    repository: rakeshdev12/usermvc
+    tag: latest
+
+namespace: multiapp-prod
+
+ingress:
+  enabled: true
+  className: traefik
+  host: localhost        # you can also use "*" if you want

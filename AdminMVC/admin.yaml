@@ -2,6 +2,7 @@
 kind: Deployment
 metadata:
   name: adminmvc
+  namespace: multiapp-prod
 spec:
   replicas: 1
   selector:
@@ -12,18 +13,20 @@ spec:
       labels:
         app: adminmvc
     spec:
+      imagePullSecrets:
+        - name: dockerhub-secret
       containers:
         - name: adminmvc
-          image: rakeshdev12/usermvc:latest    # ✅ REQUIRED
-          imagePullPolicy: Always              # ✅ REQUIRED
+          image: rakeshdev12/adminmvc:latest   # ✅ FIXED — correct image
+          imagePullPolicy: Always
           ports:
             - containerPort: 8080
-
 ---
 apiVersion: v1
 kind: Service
 metadata:
   name: adminmvc-service
+  namespace: multiapp-prod
 spec:
   selector:
     app: adminmvc

@@ -2,14 +2,15 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: mvc-ingress
-  namespace: multiapp-prod
+  namespace: {{ .Values.namespace }}
   annotations:
     traefik.ingress.kubernetes.io/router.entrypoints: web
-    traefik.ingress.kubernetes.io/router.middlewares: multiapp-prod-strip-admin-user@kubernetescrd
+    traefik.ingress.kubernetes.io/router.middlewares: {{ .Values.namespace }}-strip-prefix@kubernetescrd
 spec:
-  ingressClassName: traefik
+  ingressClassName: {{ .Values.ingress.className }}
   rules:
-    - http:
+    - host: {{ .Values.ingress.host }}
+      http:
         paths:
           - path: /admin
             pathType: Prefix
